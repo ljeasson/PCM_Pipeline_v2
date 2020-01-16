@@ -2,6 +2,7 @@ Binaries
 DerivedDataCache
 Intermediate
 Saved
+Content/PointClouds
 .vscode
 .vs
 *.VC.db
@@ -12,3 +13,6 @@ Saved
 *.suo
 *.xcodeproj
 *.xcworkspace
+*.las
+.vscode
+__pycache__
