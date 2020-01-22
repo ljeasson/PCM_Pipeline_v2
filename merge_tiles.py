@@ -7,26 +7,33 @@ def las2las_tile(directory, tile):
     #print(las2las_tile_command)
     #print("Process Start:", tile)
     os.system(las2las_tile_command)
-    #print("Process Done")
+    print("Process Done")
 
-def merge_tiles(directory, subsample_factor):  
+def merge_tiles(directory, subsample_factor, multiprocess=False):  
+    # If directory ends with "\", remove it and get file name
+    if directory.strip()[-1] is "\\": directory = directory[:-1]
     filename = directory[directory.rfind("\\")+1 :]
     
     os.system("mkdir " + directory + "\converted_subsampled")
     os.system("mkdir " + directory + "\merged")
 
     print("RUNNING LAS2LAS ON TILES")
-    '''
-    processes = []
-    for tile in os.listdir(directory):
-        processes.append(Process(target=las2las_tile, args=(directory, tile,)))
+    if multiprocess:
+        processes = []
+        for tile in os.listdir(directory):
+            processes.append(Process(target=las2las_tile, args=(directory, tile,)))
 
-    for p in processes: p.start()
-    for p in processes: p.join()
-    '''
-    las2las_command = "las2las -i " + str(directory) + "\*.laz -set_version 1.4 -keep_random_fraction 0.1 -odir " + str(directory) + "\converted_subsampled" 
-    print(las2las_command)
-    os.system(las2las_command)
+        for p in processes: p.start()
+        for p in processes: p.join()
+    else:    
+        las2las_command_las = "las2las -i " + str(directory) + "\*.las -set_version 1.4 -keep_random_fraction 0.1 -odir " + str(directory) + "\converted_subsampled" 
+        print(las2las_command_las)
+        os.system(las2las_command_las)
+
+        las2las_command_laz = "las2las -i " + str(directory) + "\*.laz -set_version 1.4 -keep_random_fraction 0.1 -odir " + str(directory) + "\converted_subsampled" 
+        print(las2las_command_laz)
+        os.system(las2las_command_laz)
+        
     print("DONE\n")
     
     print("RUNNING LASMERGE")

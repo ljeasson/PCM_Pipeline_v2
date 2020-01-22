@@ -1,9 +1,9 @@
 import os
 import random
 
-#import PointCloudTerrainGenerator
-#import Gradient
-#import GroundDetection
+from PointCloudTerrainGenerator import generate_point_cloud_terrain
+from Gradient import get_gradient
+from GroundDetection import detect_ground
 
 def get_index_positions(listOfElements, element):
     indexPosList = []
@@ -113,3 +113,8 @@ def create_heightmap(point_cloud, fileName):
     gdal_translate_command = "gdal_translate -of GTiff -ot Byte -scale 0 65535 0 255 "+str(fileName)+"_NEW.tif "+str(fileName)+"_NEW_RESCALED.tif"
     os.system(gdal_translate_command)
     print("DONE")
+
+
+def create_heightmap_v2(point_cloud, fileName):
+    print("point_cloud:",point_cloud)
+    print("fileName",fileName)

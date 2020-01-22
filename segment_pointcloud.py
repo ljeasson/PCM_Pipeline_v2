@@ -1,7 +1,7 @@
 import os
 import glob
 
-def segment_point_cloud(directory, directoryNoExt, denoise=False, interpolation=False, interpolation_factor=0.0):
+def segment_point_cloud(directory, directoryNoExt, denoise=False, interpolation=False, interpolation_factor=350):
     print("RUNNING LAS2TXT")
     las2txt_command = "las2txt -i " + str(directory) + " -o " + str(directoryNoExt) + ".txt -parse xyzic -sep comma"
     print(las2txt_command)
@@ -28,12 +28,16 @@ def segment_point_cloud(directory, directoryNoExt, denoise=False, interpolation=
     print("DONE\n")
 
     print("RUNNING TXT2LAS FOR VEGETATION")
-    os.system("txt2las -i " + str(directoryNoExt) + "_vegetation.txt -o " + str(directoryNoExt) + "_vegetation.las -parse xyzic")
+    txt2las_veg_command = "txt2las -i " + str(directoryNoExt) + "_vegetation.txt -o " + str(directoryNoExt) + "_vegetation.las -parse xyzic" 
+    print(txt2las_veg_command)
+    os.system(txt2las_veg_command)
     if denoise: os.system("lasnoise -i " + str(directoryNoExt) + "_vegetation.las -o "+ str(directoryNoExt) + "_vegetation_no_noise.las -remove_noise -ignore_class 2")
     print("DONE\n")
 
     print("RUNNING TXT2LAS FOR GROUND")
-    os.system("txt2las -i " + str(directoryNoExt) + "_ground.txt -o " + str(directoryNoExt) + "_ground.las -parse xyzic")
+    txt2las_ground_command = "txt2las -i " + str(directoryNoExt) + "_ground.txt -o " + str(directoryNoExt) + "_ground.las -parse xyzic"
+    print(txt2las_ground_command)
+    os.system(txt2las_ground_command)
     if denoise: os.system("lasnoise -i " + str(directoryNoExt) + "_ground.las -o "+ str(directoryNoExt) + "_ground_no_noise.las -remove_noise -ignore_class 2")
     print("DONE\n")
 

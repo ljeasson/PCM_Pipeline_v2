@@ -5,7 +5,7 @@ import glob
 import sys, getopt
 
 from segment_pointcloud import segment_point_cloud
-from create_heightmap import create_heightmap
+from create_heightmap import create_heightmap_v2
 from merge_tiles import merge_tiles
 
 def main(argv):
@@ -51,9 +51,14 @@ def main(argv):
 
         for dirpath,_,filenames in os.walk(directory+"\merged"):
             for f in filenames:
+                print(f)
                 merged_directory = os.path.abspath(os.path.join(dirpath, f))
         
         merged_directory_no_ext = merged_directory[: merged_directory.index(".")]
+
+        print("merged_directory:",merged_directory)
+        print("merged_directory_no_ext",merged_directory_no_ext)
+        print()
 
         # Segment Point Clouds into vegetation and ground
         segment_point_cloud(merged_directory, merged_directory_no_ext)
