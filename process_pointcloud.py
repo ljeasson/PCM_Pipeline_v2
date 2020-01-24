@@ -8,11 +8,24 @@ import matlab.engine
 from merge_tiles import merge_tiles
 from segment_pointcloud import segment_point_cloud
 
+# https://stackoverflow.com/questions/4719438/editing-specific-line-in-text-file-in-python
+def specify_directory(directory):
+    with open('PointCloudTerrainGenerator.m', 'r') as file:
+        data = file.readlines()
+
+    data[0] = "a = importdata('" + str(directory) + "');\n"
+    print(data[0])
+
+    with open('PointCloudTerrainGenerator.m', 'w') as file:
+        file.writelines( data )
+
+
 def main(argv):
     #print('Number of arguments:', len(sys.argv), 'arguments.')
     #print('Argument List:', str(sys.argv))
     
     directory = ''
+    directory_no_ext = ''
 
     try:
         opts, args = getopt.getopt(argv,"hi:",["ifile="])
@@ -63,38 +76,24 @@ def main(argv):
         # Segment Point Clouds into vegetation and ground
         segment_point_cloud(merged_directory, merged_directory_no_ext)
     
-    # Get point clouds
-    base_point_cloud, ground_point_cloud, veg_point_cloud, veg_point_cloud_subsampled = "",[],[],[]
-    base_point_cloud_txt, ground_point_cloud_txt, veg_point_cloud_txt, building_point_cloud_txt = "","","",""
-    for file in os.listdir(os.listdir(directory+"\merged")):
-        if file.endswith(".las"):
-            if "_ground.las" in file: ground_point_cloud.append(file)
-            elif "_vegetation.las" in file: veg_point_cloud.append(file)
-            elif "_vegetation_subsampled" in file: veg_point_cloud_subsampled.append(file)
-            else: base_point_cloud = file
-        if file.endswith(".txt"):
-            if "_ground.txt" in file: ground_point_cloud_txt = file
-            elif "_vegetation.txt" in file: veg_point_cloud_txt = file
-            elif "_building.txt" in file: building_point_cloud_txt = file
-            else: base_point_cloud_txt = file
-
-    print(base_point_cloud, base_point_cloud_txt)
-    print(ground_point_cloud, ground_point_cloud_txt)
-    print(veg_point_cloud, veg_point_cloud_txt, veg_point_cloud_subsampled)
-    print(building_point_cloud_txt)
-
     # Create heightmap from Ground point cloud
-    #fileName_ground = input_point_cloud[:input_point_cloud.index(".")]
-    #create_heightmap(ground_point_cloud, fileName_ground)
+    # https://stackoverflow.com/questions/51406331/how-to-run-a-matlab-code-on-python
+    # https://www.mathworks.com/help/matlab/matlab-engine-for-python.html
+
+    print("CONVERTING GROUND POINTCLOUD TO HEIGHTMAP")
+    specify_directory(str(directory_no_ext) + "_ground.txt")
     eng = matlab.engine.start_matlab()
     eng.PointCloudTerrainGenerator(nargout=0)
     eng.Gradient(nargout=0)
     eng.GroundDetection(nargout=0)
 
+    print("SAVING HEIGHTMAP TO " + str(directory[:directory.rfind('\\')+1]))   
+    os.system('copy "' + str(os.getcwd()) + '\\Heighmap Median 3x3.png" "' + str(directory[:directory.rfind('\\')+1]) + '"')
+
     # Open UE4 Editor with PCM Pipeline
-    print("OPENING UE4 EDITOR WITH PCM PIPELINE")
+    #print("OPENING UE4 EDITOR WITH PCM PIPELINE")
     #os.system("UE4Editor 'D:\Users\Lee\Unreal Projects\PCM_PIpeline_v2\PCM_PIpeline_v2.uproject'")
-    print("DONE\n")
+    #print("DONE\n")
 
 
 if __name__ == "__main__":

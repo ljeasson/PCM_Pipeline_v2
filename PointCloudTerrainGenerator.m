@@ -1,17 +1,4 @@
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\WA_mtBaker_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\CA_CalaverasTuolumne_2011Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\ARRA-GA_Okefenokee_2010_000354_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\HI_Oahu_2015_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\ID_MoscowMountain_2003_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\TX_RioGrand_Cloud2.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\VA_ChesapeakeBaySouth_2015_2017_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\FL_WashingtonCounty_2007_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\IN_WT_Parke_2013_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\OR_Crater_2010_Cloud.txt');
-% a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\Mine1Genova_Cloud.txt');
-
-%a= importdata('C:\Users\Lee\Desktop\Point_Cloud_Processing\USCAYF20180722f1a1_180722_181152_1_dem_filter_reproject_ground.txt');
-a = importdata('D:\PointClouds\test_point_cloud.txt');
+a = importdata('D:\PointClouds\USCAYF20180722f1a1_180722_181152_1_dem_filter_reproject_ground.txt');
 close all;
 
 % Set precision levels

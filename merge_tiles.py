@@ -9,7 +9,7 @@ def las2las_tile(directory, tile):
     os.system(las2las_tile_command)
     print("Process Done")
 
-def merge_tiles(directory, subsample_factor, multiprocess=False):  
+def merge_tiles(directory, subsample_factor, multiprocess=False, remove_buffer=True):  
     # If directory ends with "\", remove it and get file name
     if directory.strip()[-1] is "\\": directory = directory[:-1]
     filename = directory[directory.rfind("\\")+1 :]
@@ -37,6 +37,8 @@ def merge_tiles(directory, subsample_factor, multiprocess=False):
     print("DONE\n")
     
     print("RUNNING LASMERGE")
+    if remove_buffer:
+        os.system("lastile -i " + str(directory) + "\*.las -remove_buffer -odir " + str(directory) + "\converted_subsampled")
     lasmerge_command = "lasmerge -i " + str(directory) + "\converted_subsampled\*.las -o " + str(directory) + "\merged\\" + str(filename) + "_merged.las"
     print(lasmerge_command)
     os.system(lasmerge_command)
