@@ -7,9 +7,9 @@ def las2las_tile(directory, tile):
     #print(las2las_tile_command)
     #print("Process Start:", tile)
     os.system(las2las_tile_command)
-    print("Process Done")
+    #print("Processing",directory,tile,"Done")
 
-def merge_tiles(directory, subsample_factor, multiprocess=False, remove_buffer=True):  
+def merge_tiles(directory, subsample_factor, multiprocess=False, remove_buffer=False):  
     # If directory ends with "\", remove it and get file name
     if directory.strip()[-1] is "\\": directory = directory[:-1]
     filename = directory[directory.rfind("\\")+1 :]
@@ -18,13 +18,25 @@ def merge_tiles(directory, subsample_factor, multiprocess=False, remove_buffer=T
     os.system("mkdir " + directory + "\merged")
 
     print("RUNNING LAS2LAS ON TILES")
+    # https://stackoverflow.com/questions/9671224/split-a-python-list-into-other-sublists-i-e-smaller-lists
     if multiprocess:
         processes = []
-        for tile in os.listdir(directory):
-            processes.append(Process(target=las2las_tile, args=(directory, tile,)))
+        tiles = os.listdir(directory)
+        tile_chunks = [tiles[x:x+20] for x in range(0, len(tiles), 20)]
 
-        for p in processes: p.start()
-        for p in processes: p.join()
+        for chunk in tile_chunks:
+            print("Processing",chunk[:5])
+            
+            for tile in chunk:
+                p = Process(target=las2las_tile, args=(directory, tile))
+                processes.append(p)
+
+            for p in processes: p.start()
+            for p in processes: p.join()
+
+            print("Processing Done\n")
+            processes = []
+
     else:    
         las2las_command_las = "las2las -i " + str(directory) + "\*.las -set_version 1.4 -keep_random_fraction 0.1 -odir " + str(directory) + "\converted_subsampled" 
         print(las2las_command_las)

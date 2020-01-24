@@ -58,7 +58,7 @@ def main(argv):
     # IF INPUT IS A DIRECTORY
     else:
         # Merge directory of tiles
-        merge_tiles(directory, 0.5)
+        merge_tiles(directory, 0.5, multiprocess=True)
 
         merged_directory = ""
 
