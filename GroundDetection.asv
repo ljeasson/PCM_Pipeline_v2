@@ -22,4 +22,4 @@ imgcompmed = medfilt2(imgcompg,medwindow);   % replaced orignial img1norm
 imgtnorm(imgtnorm==0)=imgcompmed(imgtnorm==0);
 figure;imshow(imgtnorm);title('Steep Subed with median 7x7');
 imgtnorm2=medfilt2(imgtnorm,[3,3]);
-figure;imshow(imgtnorm2);title('Heighmap Median 3x3');imwrite(imgtnorm2, 'Heighmap Median 3x3.png','png');
+figure;imshow(imgtnorm2);title('Heighmap Median 3x3');imsave(

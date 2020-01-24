@@ -1,9 +1,6 @@
 import os
 import random
-
-from PointCloudTerrainGenerator import generate_point_cloud_terrain
-from Gradient import get_gradient
-from GroundDetection import detect_ground
+import matlab.engine
 
 def get_index_positions(listOfElements, element):
     indexPosList = []
@@ -115,6 +112,13 @@ def create_heightmap(point_cloud, fileName):
     print("DONE")
 
 
-def create_heightmap_v2(point_cloud, fileName):
-    print("point_cloud:",point_cloud)
-    print("fileName",fileName)
+def create_heightmap_v2(directory, fileName):
+    print(str(directory)+"\\"+str(fileName))
+
+    eng = matlab.engine.start_matlab()
+    eng.PointCloudTerrainGenerator(nargout=0)
+    eng.Gradient(nargout=0)
+    eng.GroundDetection(nargout=0)
+
+if __name__ == "__main__":
+    create_heightmap_v2("D:\PointClouds", "test_point_cloud.txt")

@@ -11,6 +11,7 @@
 % a=importdata('C:\Users\tavakkol\Documents\Unreal Projects\MyPCL_Apartment\Content\PointCloud\Mine1Genova_Cloud.txt');
 
 %a= importdata('C:\Users\Lee\Desktop\Point_Cloud_Processing\USCAYF20180722f1a1_180722_181152_1_dem_filter_reproject_ground.txt');
+a = importdata('D:\PointClouds\test_point_cloud.txt');
 close all;
 
 % Set precision levels

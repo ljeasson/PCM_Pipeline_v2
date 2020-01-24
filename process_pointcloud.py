@@ -3,10 +3,10 @@
 import os
 import glob
 import sys, getopt
+import matlab.engine
 
-from segment_pointcloud import segment_point_cloud
-from create_heightmap import create_heightmap_v2
 from merge_tiles import merge_tiles
+from segment_pointcloud import segment_point_cloud
 
 def main(argv):
     #print('Number of arguments:', len(sys.argv), 'arguments.')
@@ -86,7 +86,11 @@ def main(argv):
     # Create heightmap from Ground point cloud
     #fileName_ground = input_point_cloud[:input_point_cloud.index(".")]
     #create_heightmap(ground_point_cloud, fileName_ground)
-    
+    eng = matlab.engine.start_matlab()
+    eng.PointCloudTerrainGenerator(nargout=0)
+    eng.Gradient(nargout=0)
+    eng.GroundDetection(nargout=0)
+
     # Open UE4 Editor with PCM Pipeline
     print("OPENING UE4 EDITOR WITH PCM PIPELINE")
     #os.system("UE4Editor 'D:\Users\Lee\Unreal Projects\PCM_PIpeline_v2\PCM_PIpeline_v2.uproject'")
