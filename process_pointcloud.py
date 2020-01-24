@@ -89,10 +89,16 @@ def main(argv):
 
     print("SAVING HEIGHTMAP TO " + str(directory[:directory.rfind('\\')+1]))   
     os.system('copy "' + str(os.getcwd()) + '\\Heighmap Median 3x3.png" "' + str(directory[:directory.rfind('\\')+1]) + '"')
+    print("DONE\n")
+
+    print("ADDING POINTCLOUDS TO UE4")   
+    os.system('copy "' + str(directory_no_ext) + '_ground.las" "' + str(os.getcwd()) + '\Content\PointClouds"')
+    os.system('copy "' + str(directory_no_ext) + '_vegetation.las" "' + str(os.getcwd()) + '\Content\PointClouds"')
+    print("DONE\n")
 
     # Open UE4 Editor with PCM Pipeline
     #print("OPENING UE4 EDITOR WITH PCM PIPELINE")
-    #os.system("UE4Editor 'D:\Users\Lee\Unreal Projects\PCM_PIpeline_v2\PCM_PIpeline_v2.uproject'")
+    #os.system('UE4Editor "D:\Users\Lee\Unreal Projects\PCM_PIpeline_v2\PCM_PIpeline_v2.uproject"')
     #print("DONE\n")
 
 
