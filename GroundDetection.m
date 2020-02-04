@@ -1,3 +1,6 @@
+directory_ground = 'D:\PointClouds\tahoe_tiles_denoised_ground_norm_classify\tahoe_tile_-10000_100000_denoised_ground_norm_classify_ground.txt';
+output_directory = 'D:\PointClouds\tahoe_tiles_denoised_ground_norm_classify\tahoe_tile_0_73000_denoised_ground_norm_classify\\';
+name = 'tahoe_tile_0_73000_denoised_ground_norm_classify';
 
 limit = 2.5;     % Slope limit
 T=zeros(max(xInd1)+1,max(yInd1)+1);
@@ -22,4 +25,4 @@ imgcompmed = medfilt2(imgcompg,medwindow);   % replaced orignial img1norm
 imgtnorm(imgtnorm==0)=imgcompmed(imgtnorm==0);
 figure;imshow(imgtnorm);title('Steep Subed with median 7x7');
 imgtnorm2=medfilt2(imgtnorm,[3,3]);
-figure;imshow(imgtnorm2);title('Heighmap Median 3x3');imwrite(imgtnorm2, 'Heighmap Median 3x3.png','png');
+figure;imshow(imgtnorm2);title('Heighmap Median 3x3');imwrite(imgtnorm2, [output_directory name '_Heighmap_Median_3x3.png'],'png');

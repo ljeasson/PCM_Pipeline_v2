@@ -13,7 +13,7 @@ def segment_point_cloud(directory, directoryNoExt, denoise=False, interpolation=
         with open(str(directoryNoExt) + "_ground.txt", "wt") as fout_G: #Ground
             with open(str(directoryNoExt) + "_vegetation.txt", "wt") as fout_V: #Vegetation
                 with open(str(directoryNoExt) + "_building.txt", "wt") as fout_B: #Building
-                    with open(str(directoryNoExt) + "_building.txt", "wt") as fout_U: #Unclassified
+                    with open(str(directoryNoExt) + "_unclassified.txt", "wt") as fout_U: #Unclassified
                         for line in fin:
                             line_split = line.split(',')
                             if line_split[4] == '1\n':
@@ -39,6 +39,20 @@ def segment_point_cloud(directory, directoryNoExt, denoise=False, interpolation=
     print(txt2las_ground_command)
     os.system(txt2las_ground_command)
     if denoise: os.system("lasnoise -i " + str(directoryNoExt) + "_ground.las -o "+ str(directoryNoExt) + "_ground_no_noise.las -remove_noise -ignore_class 2")
+    print("DONE\n")
+
+    print("RUNNING TXT2LAS FOR BUILDING")
+    txt2las_building_command = "txt2las -i " + str(directoryNoExt) + "_building.txt -o " + str(directoryNoExt) + "_building.las -parse xyzic"
+    print(txt2las_building_command)
+    os.system(txt2las_building_command)
+    if denoise: os.system("lasnoise -i " + str(directoryNoExt) + "_building.las -o "+ str(directoryNoExt) + "_building_no_noise.las -remove_noise -ignore_class 2")
+    print("DONE\n")
+    
+    print("RUNNING TXT2LAS FOR UNCLASSIFIED")
+    txt2las_unclassified_command = "txt2las -i " + str(directoryNoExt) + "_unclassified.txt -o " + str(directoryNoExt) + "_unclassified.las -parse xyzic"
+    print(txt2las_unclassified_command)
+    os.system(txt2las_unclassified_command)
+    if denoise: os.system("lasnoise -i " + str(directoryNoExt) + "_unclassified.las -o "+ str(directoryNoExt) + "_unclassified_no_noise.las -remove_noise -ignore_class 2")
     print("DONE\n")
 
     if interpolation:

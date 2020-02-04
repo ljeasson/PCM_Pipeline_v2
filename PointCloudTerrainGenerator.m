@@ -1,4 +1,5 @@
-a = importdata('D:\PointClouds\USCAYF20180722f1a1_180722_181152_1_dem_filter_reproject_ground.txt');
+directory_ground = 'D:\PointClouds\tahoe_tiles_denoised_ground_norm_classify\tahoe_tile_-10000_100000_denoised_ground_norm_classify_ground.txt';
+a = importdata(directory_ground);
 close all;
 
 % Set precision levels
