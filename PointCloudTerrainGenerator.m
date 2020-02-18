@@ -1,4 +1,4 @@
-directory_ground = 'D:\PointClouds\tahoe_tiles_denoised_ground_norm_classify\tahoe_tile_-10000_100000_denoised_ground_norm_classify_ground.txt';
+directory_ground = 'D:\PointClouds\Plot254\P254_2018_ground.txt';
 a = importdata(directory_ground);
 close all;
 
